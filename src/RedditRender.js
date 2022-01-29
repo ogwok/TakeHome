@@ -1,14 +1,18 @@
 import React, { useState, useRef, useCallback } from "react";
-import useBookSearch from "./BookHook";
+import useBookSearch from "./RedditHook";
 
-export default function Book() {
+export default function Book({ type1 }) {
   const [query, setQuery] = useState("");
   const [pageNumber, setPageNumber] = useState(1);
 
-  const { books, hasMore, loading, error } = useBookSearch(query, pageNumber);
+  const { titles, hasMore, loading, error } = useBookSearch(
+    query,
+    pageNumber,
+    type1
+  );
 
   const observer = useRef();
-  const lastBookElementRef = useCallback(
+  const lastElementRef = useCallback(
     (node) => {
       if (loading) return;
       if (observer.current) observer.current.disconnect();
@@ -29,16 +33,19 @@ export default function Book() {
 
   return (
     <>
-      <input type="text" value={query} onChange={handleSearch}></input>
-      {books.map((book, index) => {
-        if (books.length === index + 1) {
+      {titles.map((title, index) => {
+        if (titles.length === index + 1) {
           return (
-            <div ref={lastBookElementRef} key={book}>
-              {book}
+            <div ref={lastElementRef} key={title}>
+              {title}
             </div>
           );
         } else {
-          return <div key={book}>{book}</div>;
+          return (
+            <div>
+              <div key={title}>{title}</div>
+            </div>
+          );
         }
       })}
       <div>{loading && "Loading..."}</div>
