@@ -49,16 +49,19 @@ export default function BasicTabs() {
 
   return (
     <Container maxWidth="lg">
-      <Box sx={{ width: "70%" }}>
+      <Typography variant="h4" component="div" gutterBottom sx={{ mt: 0.7 }}>
+        Reddit
+      </Typography>
+      <Box sx={{ width: "70%", bgcolor: "#DAE0E6", mt: 1.7 }}>
         <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
           <Tabs
             value={value}
             onChange={handleChange}
             aria-label="basic tabs example"
           >
-            <Tab label="Item One" {...a11yProps(0)} />
-            <Tab label="Item Two" {...a11yProps(1)} />
-            <Tab label="Item Three" {...a11yProps(2)} />
+            <Tab label="Hot" {...a11yProps(0)} />
+            <Tab label="New" {...a11yProps(1)} />
+            <Tab label="Top" {...a11yProps(2)} />
           </Tabs>
         </Box>
         <TabPanel value={value} index={0}>

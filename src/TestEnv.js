@@ -7,6 +7,7 @@ export default function useBookSearch(query, pageNumber, type1) {
   const [titles, setTitles] = useState([]);
   const [hasMore, setHasMore] = useState(false);
   const [after, setAfter] = useState("");
+  const [author, setAuthor] = useState([]);
 
   useEffect(() => {
     setTitles([]);
@@ -25,15 +26,18 @@ export default function useBookSearch(query, pageNumber, type1) {
       .then((res) => {
         setTitles((prevBooks) => {
           setAfter(res.data.data.after);
-
-          console.log(res.data.data.children.map((b) => b.data.author));
-
-          return [
-            ...new Set([
-              ...prevBooks,
-              ...res.data.data.children.map((b) => b.data.title),
-            ]),
-          ];
+          let hotpost = [];
+          const postsArr = res.data.data.children;
+          for (let i = 0; i < postsArr.length; i++) {
+            hotpost = postsArr[i].data;
+          }
+          //   console.log(hotpost);
+          //   console.log(res.data.data.children);
+          setAuthor((prevAuth) => {
+            return [...prevAuth, res.data.data.children];
+          });
+          //   return [...prevBooks, hotpost.title];
+          return [...new Set([...prevBooks, ...res.data.data.children])];
         });
         setHasMore(res.data.data.children.length > 0);
 
@@ -45,6 +49,6 @@ export default function useBookSearch(query, pageNumber, type1) {
       });
     return () => cancel();
   }, [query, pageNumber]);
-
-  return { loading, error, titles, hasMore };
+  console.log(titles);
+  return { loading, error, titles, author, hasMore };
 }
