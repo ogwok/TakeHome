@@ -1,15 +1,15 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-export default function useBookSearch(query, pageNumber, type1) {
+export default function usePostSearch(query, pageNumber, type1) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
-  const [titles, setTitles] = useState([]);
+  const [data, setData] = useState([]);
   const [hasMore, setHasMore] = useState(false);
   const [after, setAfter] = useState("");
 
   useEffect(() => {
-    setTitles([]);
+    setData([]);
   }, [query]);
 
   useEffect(() => {
@@ -23,17 +23,9 @@ export default function useBookSearch(query, pageNumber, type1) {
       cancelToken: new axios.CancelToken((c) => (cancel = c)),
     })
       .then((res) => {
-        setTitles((prevBooks) => {
+        setData((prevData) => {
           setAfter(res.data.data.after);
-
-          console.log(res.data.data.children.map((b) => b.data.author));
-
-          return [
-            ...new Set([
-              ...prevBooks,
-              ...res.data.data.children.map((b) => b.data.title),
-            ]),
-          ];
+          return [...new Set([...prevData, ...res.data.data.children])];
         });
         setHasMore(res.data.data.children.length > 0);
 
@@ -45,6 +37,6 @@ export default function useBookSearch(query, pageNumber, type1) {
       });
     return () => cancel();
   }, [query, pageNumber]);
-
-  return { loading, error, titles, hasMore };
+  console.log(data);
+  return { loading, error, data, hasMore };
 }

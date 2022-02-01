@@ -4,7 +4,7 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-import Book from "./RedditRender";
+import RedditRender from "./RedditRender";
 import Container from "@mui/material/Container";
 
 function TabPanel(props) {
@@ -48,31 +48,36 @@ export default function BasicTabs() {
   };
 
   return (
-    <Container maxWidth="lg">
-      <Typography variant="h4" component="div" gutterBottom sx={{ mt: 0.7 }}>
-        Reddit
-      </Typography>
-      <Box sx={{ width: "70%", bgcolor: "#DAE0E6", mt: 1.7 }}>
-        <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-          <Tabs
-            value={value}
-            onChange={handleChange}
-            aria-label="basic tabs example"
-          >
-            <Tab label="Hot" {...a11yProps(0)} />
-            <Tab label="New" {...a11yProps(1)} />
-            <Tab label="Top" {...a11yProps(2)} />
-          </Tabs>
+    <Container maxWidth="md">
+      <Box>
+        <Typography variant="h4" component="div" gutterBottom sx={{ mt: 0.7 }}>
+          Reddit
+        </Typography>
+        <Box
+          sx={{ width: "100%", bgcolor: "#DAE0E6", mt: 1.7, height: "auto" }}
+        >
+          <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+            <Tabs
+              value={value}
+              onChange={handleChange}
+              aria-label="basic tabs example"
+            >
+              <Tab label="Hot" {...a11yProps(0)} />
+              <Tab label="New" {...a11yProps(1)} />
+              <Tab label="Top" {...a11yProps(2)} />
+            </Tabs>
+          </Box>
+
+          <TabPanel value={value} index={0}>
+            <RedditRender type1="new" />
+          </TabPanel>
+          <TabPanel value={value} index={1}>
+            <RedditRender type1="new" />
+          </TabPanel>
+          <TabPanel value={value} index={2}>
+            <RedditRender type1="new" />
+          </TabPanel>
         </Box>
-        <TabPanel value={value} index={0}>
-          <Book type1="hot" />
-        </TabPanel>
-        <TabPanel value={value} index={1}>
-          <Book type1="new" />
-        </TabPanel>
-        <TabPanel value={value} index={2}>
-          <Book type1="hot" />
-        </TabPanel>
       </Box>
     </Container>
   );

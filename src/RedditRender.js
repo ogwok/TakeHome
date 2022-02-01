@@ -1,19 +1,18 @@
 import React, { useState, useRef, useCallback } from "react";
-// import useBookSearch from "./RedditHook";
-import useBookSearch from "./TestEnv";
+import usePostSearch from "./RedditHook";
 import CardComp from "./CardComp";
 
-export default function Book({ type1 }) {
+export default function RedditRender({ type1 }) {
   const [query, setQuery] = useState("");
   const [pageNumber, setPageNumber] = useState(1);
 
-  const { titles, hasMore, loading, error, author } = useBookSearch(
+  const { data, hasMore, loading, error } = usePostSearch(
     query,
     pageNumber,
     type1
   );
 
-  let tempholder = titles.map((b) => b.data);
+  let tempholder = data.map((b) => b.data);
   const observer = useRef();
   const lastElementRef = useCallback(
     (node) => {
@@ -29,29 +28,27 @@ export default function Book({ type1 }) {
     [loading, hasMore]
   );
 
-  function handleSearch(e) {
-    setQuery(e.target.value);
-    setPageNumber(1);
-  }
-
   return (
     <>
-      {tempholder.map((title, index) => {
-        if (title.title.length === index + 1) {
+      {tempholder.map((data, index) => {
+        if (data.title.length === index + 1) {
           return (
-            <div ref={lastElementRef} key={title.title}>
-              {title.title}
+            <div ref={lastElementRef} key={data.title}>
+              {data.title}
             </div>
           );
         } else {
           return (
             <div>
               <CardComp
-                title={title.title}
-                author={title.author}
-                time={title.created_utc}
-                comment={title.num_comments}
-                id={title.id}
+                title={data.title}
+                author={data.author}
+                time={data.created_utc}
+                comment={data.num_comments}
+                id={data.id}
+                ups={data.ups}
+                downs={data.downs}
+                imageurl={data.thumbnail}
               />
             </div>
           );

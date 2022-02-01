@@ -16,7 +16,7 @@ import axios from "axios";
 export default function Post() {
   let { postSlug } = useParams();
 
-  const [titles, setTitles] = useState([]);
+  const [data, setData] = useState([]);
   axios({
     method: "GET",
     url: `https://www.reddit.com/r/holdmybeer/${postSlug}.json`,
@@ -24,19 +24,14 @@ export default function Post() {
     console.log(res.data[0].data.children[0].data.title);
     let resOne = res.data;
 
-    // let resTwo = resOne.data.children.map((b) => b.data);
     let a = resOne.map((a) => a.data.children);
     let b = [...a.map((b) => b)];
     let c = [...new Set(...b)];
-    setTitles(...c.map((c) => c.data));
-    //  console.log(...resOne);
+    setData(...c.map((c) => c.data));
   });
 
-  useEffect(() => {
-    // Fetch post using the postSlug
-  }, [postSlug]);
-  console.log(titles.title);
-  // console.log(titles.map((b) => b.data.children).map((c) => c.data.title));
+  useEffect(() => {}, [postSlug]);
+
   return (
     <div>
       <Card sx={{ minWidth: 275, mt: 7, mb: 7 }}>
@@ -54,10 +49,10 @@ export default function Post() {
                 color="text.secondary"
                 gutterBottom
               >
-                Posted by {titles.author} created at: {titles.created_utc}
+                Posted by {data.author} created at: {data.created_utc}
               </Typography>
               <Typography variant="h5" component="div" gutterBottom>
-                {titles.title}
+                {data.title}
               </Typography>
 
               <Typography
@@ -65,7 +60,7 @@ export default function Post() {
                 color="text.secondary"
                 gutterBottom
               >
-                {titles.num_comments} Comments
+                {data.num_comments} Comments
               </Typography>
             </Box>
           </Stack>
