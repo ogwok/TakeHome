@@ -13,6 +13,7 @@ export default function usePostSearch(query, pageNumber, type1) {
   }, [query]);
 
   useEffect(() => {
+
     setLoading(true);
     setError(false);
     let cancel;
@@ -37,6 +38,6 @@ export default function usePostSearch(query, pageNumber, type1) {
       });
     return () => cancel();
   }, [query, pageNumber]);
-  console.log(data);
+  // console.log(data);
   return { loading, error, data, hasMore };
 }

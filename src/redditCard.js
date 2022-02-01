@@ -21,7 +21,7 @@ export default function RedditCard({
       <CardContent>
         <Stack direction="row">
           <Voting postId={id} votes={ups} />
-          <Link to={`/${id}`}>
+          <Link to={`posts/${id}`}>
             <Box sx={{ width: "100%" }}>
               <Typography
                 sx={{ fontSize: 14 }}

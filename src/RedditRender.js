@@ -1,61 +1,33 @@
-import React, { useState, useRef, useCallback } from "react";
-import usePostSearch from "./RedditHook";
+import React, { useMemo } from "react";
 import CardComp from "./redditCard";
+import { useDispatch, useSelector } from "react-redux";
+import { getPosts } from "./features/posts/posts.slice";
 
 export default function RedditRender({ type1 }) {
-  const [query, setQuery] = useState("");
-  const [pageNumber, setPageNumber] = useState(1);
+  const dispatch = useDispatch();
+  const posts = useSelector(({ posts }) => posts.posts.data);
 
-  const { data, hasMore, loading, error } = usePostSearch(
-    query,
-    pageNumber,
-    type1
-  );
-
-  let tempholder = data.map((b) => b.data);
-  const observer = useRef();
-  const lastElementRef = useCallback(
-    (node) => {
-      if (loading) return;
-      if (observer.current) observer.current.disconnect();
-      observer.current = new IntersectionObserver((entries) => {
-        if (entries[0].isIntersecting && hasMore) {
-          setPageNumber((prevPageNumber) => prevPageNumber + 1);
-        }
-      });
-      if (node) observer.current.observe(node);
-    },
-    [loading, hasMore]
-  );
+  useMemo(() => {
+    dispatch(getPosts({ postType: "new", params: { limit: 50 } }));
+  }, [dispatch]);
 
   return (
     <>
-      {tempholder.map((data, index) => {
-        if (data.title.length === index + 1) {
-          return (
-            <div ref={lastElementRef} key={data.title}>
-              {data.title}
-            </div>
-          );
-        } else {
-          return (
-            <div>
-              <CardComp
-                title={data.title}
-                author={data.author}
-                time={data.created_utc}
-                comment={data.num_comments}
-                id={data.id}
-                ups={data.ups}
-                downs={data.downs}
-                imageurl={data.thumbnail}
-              />
-            </div>
-          );
-        }
-      })}
-      <div>{loading && "Loading..."}</div>
-      <div>{error && "Error"}</div>
+      <div>
+        {posts?.children &&
+          posts.children.map((temp) => (
+            <CardComp
+              title={temp.data.title}
+              author={temp.data.author}
+              time={temp.data.created_utc}
+              comment={temp.data.num_comments}
+              id={temp.data.id}
+              ups={temp.data.ups}
+              downs={temp.data.downs}
+              imageurl={temp.data.thumbnail}
+            />
+          ))}
+      </div>
     </>
   );
 }
