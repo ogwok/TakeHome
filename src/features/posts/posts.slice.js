@@ -9,9 +9,9 @@ const initialState = {
   },
 };
 
-export const getPost = createAsyncThunk("posts/getPost", async (id) => {
-  const response = await api.getPost(id);
-  return response.data;
+export const getPost = createAsyncThunk("posts/getPost", async (postSlug) => {
+  const response = await api.getPost(postSlug);
+  return response.data[0].data?.children[0].data;
 });
 
 export const postSlice = createSlice({
