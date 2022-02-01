@@ -1,6 +1,6 @@
 import React, { useState, useRef, useCallback } from "react";
 import usePostSearch from "./RedditHook";
-import CardComp from "./CardComp";
+import CardComp from "./redditCard";
 
 export default function RedditRender({ type1 }) {
   const [query, setQuery] = useState("");

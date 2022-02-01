@@ -1,13 +1,10 @@
 import React from "react";
-import Reddit from "./Reddit";
+import TabPanel from "./TabPanel";
+
 import "./App.css";
 
 function App() {
-  return (
-    <div className="App">
-      <Reddit />
-    </div>
-  );
+  return <TabPanel />;
 }
 
 export default App;
