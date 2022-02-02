@@ -39,7 +39,9 @@ const Layout = () => {
           </Typography>
         </Container>
       </Box>
-      <Outlet />
+      <Container maxWidth="lg">
+        <Outlet />
+      </Container>
     </Stack>
   );
 };
