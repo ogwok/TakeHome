@@ -6,8 +6,8 @@ import RedditCard from "./RedditCard";
 
 export default function RedditRender({ type }) {
   const dispatch = useDispatch();
-  const posts = useSelector(({ posts }) => posts.posts.data);
-
+  const posts = useSelector(({ posts }) => posts[type].data);
+  console.log(posts);
   useMemo(() => {
     dispatch(getPosts({ postType: type, params: { limit: 50 } }));
   }, [dispatch, type]);

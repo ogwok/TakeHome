@@ -9,7 +9,7 @@ import Stack from "@mui/material/Stack";
 import { useParams } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { getPost } from "./posts.slice";
-
+import RedditCard from "./RedditCard";
 
 const PostCard = () => {
   let { postSlug } = useParams();
@@ -17,49 +17,10 @@ const PostCard = () => {
   const dispatch = useDispatch();
 
   useMemo(() => {
-    dispatch(getPost (postSlug));
+    dispatch(getPost(postSlug));
   }, [dispatch, postSlug]);
 
-  return (
-    <div>
-      <Card sx={{ minWidth: 275, mt: 7, mb: 7 }}>
-        {post ? (
-          <CardContent>
-            <Stack direction="row">
-              <Box sx={{ display: "flex", flexDirection: "column" }}>
-                <ArrowUpwardOutlinedIcon />
-                54
-                <ArrowDownwardOutlinedIcon />
-              </Box>
-
-              <Box>
-                <Typography
-                  sx={{ fontSize: 14 }}
-                  color="text.secondary"
-                  gutterBottom
-                >
-                  Posted by {post.author} created at: {post.created_utc}
-                </Typography>
-                <Typography variant="h5" component="div" gutterBottom>
-                  {post.title}
-                </Typography>
-
-                <Typography
-                  sx={{ fontSize: 14 }}
-                  color="text.secondary"
-                  gutterBottom
-                >
-                  {post.num_comments} Comments
-                </Typography>
-              </Box>
-            </Stack>
-          </CardContent>
-        ) : (
-          <div />
-        )}
-      </Card>
-    </div>
-  );
+  return <div>{post && <RedditCard data={post} />}</div>;
 };
 
 export default PostCard;

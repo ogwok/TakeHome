@@ -7,11 +7,9 @@ const initialState = {
     loading: false,
     error: null,
   },
-  posts: {
-    data: null,
-    loading: false,
-    error: null,
-  },
+  new: { data: null, loading: false, error: null },
+  hot: { data: null, loading: false, error: null },
+  top: { data: null, loading: false, error: null },
 };
 
 export const getPost = createAsyncThunk("posts/getPost", async (postSlug) => {
@@ -23,7 +21,8 @@ export const getPosts = createAsyncThunk(
   "posts/getPosts",
   async ({ postType, params }) => {
     const response = await api.getPosts(postType, params);
-    return response.data.data;
+
+    return { postType, ...response.data.data };
   }
 );
 
@@ -43,16 +42,30 @@ export const postSlice = createSlice({
         };
       })
       .addCase(getPosts.pending, (state) => {
-        state.posts = { ...state.posts, loading: true };
+        state.new = {
+          ...state.posts,
+          loading: true,
+        };
+        state.top = {
+          ...state.posts,
+          loading: true,
+        };
+        state.hot = {
+          ...state.posts,
+          loading: true,
+        };
       })
       .addCase(getPosts.fulfilled, (state, action) => {
-        state.posts = {
+        state[action.payload.postType] = {
           ...state.posts,
           loading: false,
           data: {
             after: action.payload.after,
-            children: state.posts.data
-              ? [...state.posts.data?.children, ...action.payload.children]
+            children: state[action.payload.postType].data
+              ? [
+                  ...state[action.payload.postType].data?.children,
+                  ...action.payload.children,
+                ]
               : action.payload.children,
           },
         };

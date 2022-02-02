@@ -26,7 +26,7 @@ const RedditPanel = () => {
         </Box>
         {types.map((type, i) => (
           <TabPanel key={i} value={value} index={i}>
-            <RedditRender type="new" />
+            <RedditRender type={type} />
           </TabPanel>
         ))}
       </Box>

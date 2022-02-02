@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import Voting from "../voting/Voting";
 import { Avatar } from "@mui/material";
 import { format } from "timeago.js";
+import timestamp from "unix-timestamp";
 
 export default function RedditCard({ data }) {
   return (
@@ -25,34 +26,30 @@ export default function RedditCard({ data }) {
               </Box>
               <Box sx={{ px: 1 }}>
                 <Stack sx={{ justifyContent: "space-between" }} direction="row">
-                  <Typography
-                    variant="h5"
-                    component="div"
-                    color="text.secondary"
-                    gutterBottom
-                  >
-                    {data.title}
-                  </Typography>
+                  <Stack sx={{ alignItems: "center", gap: 1 }} direction="row">
+                    <Avatar sx={{ width: 24, height: 24 }} src="/" />
+                    <Typography color="text.secondary" gutterBottom>
+                      {data.author}
+                    </Typography>
+                  </Stack>
                   <Typography
                     variant="caption"
                     sx={{ ml: "auto" }}
                     color="text.secondary"
                     gutterBottom
                   >
-                    created:{format(JSON.parse(data.created_utc))}
-                    {/* <ReactTimeAgo
-                      date={}
-                      locale="en-US"
-                    /> */}
+                    created:
+                    {format(timestamp.toDate(data.created_utc).toString())}
                   </Typography>
                 </Stack>
-                <Stack sx={{ alignItems: "center", gap: 1 }} direction="row">
-                  <Avatar sx={{ width: 24, height: 24 }} src="/" />
-                  <Typography color="text.secondary" gutterBottom>
-                    {data.author}
-                  </Typography>
-                </Stack>
-
+                <Typography
+                  variant="h5"
+                  component="div"
+                  color="text.secondary"
+                  gutterBottom
+                >
+                  {data.title}
+                </Typography>
                 <Typography
                   sx={{ fontSize: 14 }}
                   color="text.secondary"
