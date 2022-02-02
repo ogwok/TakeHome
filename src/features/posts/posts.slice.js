@@ -22,7 +22,7 @@ export const getPost = createAsyncThunk("posts/getPost", async (postSlug) => {
 export const getPosts = createAsyncThunk(
   "posts/getPosts",
   async ({ postType, params }) => {
-    const response = await api.getPost(postType, params);
+    const response = await api.getPosts(postType, params);
     return response.data.data;
   }
 );
@@ -49,7 +49,12 @@ export const postSlice = createSlice({
         state.posts = {
           ...state.posts,
           loading: false,
-          data: action.payload,
+          data: {
+            after: action.payload.after,
+            children: state.posts.data
+              ? [...state.posts.data?.children, ...action.payload.children]
+              : action.payload.children,
+          },
         };
       });
   },

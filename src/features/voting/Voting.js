@@ -1,7 +1,7 @@
 import { ExpandLessRounded, ExpandMoreRounded } from "@mui/icons-material";
 import { Button, ButtonGroup, IconButton, Typography } from "@mui/material";
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch} from "react-redux";
 import { downVote, upVote } from "./voting.slice";
 
 const Voting = ({ postId, votes }) => {
