@@ -12,7 +12,7 @@ import Layout from "./layout";
 const theme = createTheme({
   palette: {
     primary: {
-      main: "#0a3744",
+      main: "#3970DF",
     },
   },
 });
@@ -20,17 +20,16 @@ const theme = createTheme({
 function App() {
   return (
     <BrowserRouter>
-      <Provider store={store}>
-        <ThemeProvider theme={theme}>
-          <CssBaseline />
-          <Routes>
-            <Route path="/" element={<Layout />}>
-              <Route index element={<Home />} />
-              <Route path="/posts/:postSlug" element={<PostCard />} />
-            </Route>
-          </Routes>
-        </ThemeProvider>
-      </Provider>
+      {/* <Provider store={store}> */}
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <Routes>
+          <Route path="/" element={<Layout />}>
+            <Route index element={<Home />} />
+          </Route>
+        </Routes>
+      </ThemeProvider>
+      {/* </Provider> */}
     </BrowserRouter>
   );
 }

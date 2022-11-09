@@ -12,7 +12,7 @@ const Layout = () => {
       <AppBar position="static">
         <Toolbar>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            Reddit Challenge
+            Rokeside Challenge
           </Typography>
           <Button size="small" color="inherit">
             version 1
@@ -21,10 +21,10 @@ const Layout = () => {
       </AppBar>
       <Box
         sx={{
-          height: 150,
+          height: 130,
           width: "100%",
           bgcolor: "primary.main",
-          marginBottom: "-3.8em",
+          marginBottom: "-2.8em",
         }}
       >
         <Container maxWidth="lg">
@@ -35,11 +35,11 @@ const Layout = () => {
             gutterBottom
             sx={{ mt: 0.7, textAlign: "center" }}
           >
-            Hold My Bear
+            Survey Component
           </Typography>
         </Container>
       </Box>
-      <Container maxWidth="lg">
+      <Container maxWidth="xl">
         <Outlet />
       </Container>
     </Stack>
