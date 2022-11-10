@@ -1,33 +1,28 @@
 import { Button, TextField, Box, Stack } from "@mui/material";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { addToCart, addValues } from "./store/slices/surveySlice";
+import { addOptions, addOptionsValues } from "./store/slices/surveySlice";
 import Title from "./Title";
 
-export default function Survey() {
+export default function Options() {
   const dispatch = useDispatch();
   const [questions, setQuestions] = useState([]);
 
   const addQuestions = () => {
     let questions2 = [...questions];
-    let item = {
-      value: "",
-      id: Math.random(0.5),
-      writable: true,
-      checked: false,
-    };
+    let item = { value: "", id: Math.random(0.5), checked: false };
     questions2.push(item);
     setQuestions(questions2);
-    dispatch(addToCart(item));
+    dispatch(addOptions(item));
   };
 
   const handleChange = (event, id) => {
     let index = questions.findIndex((obj) => obj.id === id);
     console.log("Helo", event.target.value);
     dispatch(
-      addValues({
+      addOptionsValues({
         value: event.target.value,
-        questionId: id,
+        optionId: id,
       })
     );
   };
@@ -97,17 +92,11 @@ export default function Survey() {
               ></Box>
             </Stack>
           </Box>
-          {/* <TextField
-            onChange={(event) => handleChange(event, id)}
-            id="outlined-basic"
-            label="Outlined"
-            variant="outlined"
-          /> */}
         </div>
       ))}
 
       <Button variant="contained" sx={{ mt: 2 }} onClick={addQuestions}>
-        Add Questions
+        Add Options
       </Button>
     </div>
   );

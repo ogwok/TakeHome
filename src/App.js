@@ -1,7 +1,7 @@
+// eslint-disable-next-line no-unused-expressions
 import React from "react";
-import { store } from "./store/store";
+import store from "./store";
 import { Provider } from "react-redux";
-import PostCard from "./features/posts/Post.card";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import { BrowserRouter } from "react-router-dom";
@@ -20,16 +20,16 @@ const theme = createTheme({
 function App() {
   return (
     <BrowserRouter>
-      {/* <Provider store={store}> */}
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <Routes>
-          <Route path="/" element={<Layout />}>
-            <Route index element={<Home />} />
-          </Route>
-        </Routes>
-      </ThemeProvider>
-      {/* </Provider> */}
+      <Provider store={store}>
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          <Routes>
+            <Route path="/" element={<Layout />}>
+              <Route index element={<Home />} />
+            </Route>
+          </Routes>
+        </ThemeProvider>
+      </Provider>
     </BrowserRouter>
   );
 }

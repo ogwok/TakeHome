@@ -4,35 +4,13 @@ import Tab from "@mui/material/Tab";
 import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
-import { Stack, TextField, Typography, Button } from "@mui/material";
+import { TextField, Typography, Button } from "@mui/material";
 import Grid from "@mui/material/Grid";
-import Title from "./Title";
-import Body from "./Body";
 import PreviewTitle from "./PreviewTitle";
 import PreviewBody from "./PreviewBody";
 import Survey from "./Survey";
-
-export function Review() {
-  return (
-    <div>
-      <Typography variant="h7" component="h2">
-        Preview
-        <Box
-          sx={{
-            width: "100%",
-            typography: "body1",
-            flexGrow: 1,
-            bgcolor: "#fff",
-            mt: 1.4,
-          }}
-        >
-          <PreviewTitle />
-          <PreviewBody />
-        </Box>
-      </Typography>
-    </div>
-  );
-}
+import Review from "./Review";
+import Options from "./Options";
 
 export default function Front() {
   const [value, setValue] = React.useState("1");
@@ -70,9 +48,13 @@ export default function Front() {
             <TabPanel value="2" sx={{ bgcolor: "#fff" }}>
               Questions
               <Survey />
+              Options
+              <Options />
             </TabPanel>
           </TabContext>
         </Grid>
+
+        {/* Preview Component */}
         <Grid item xs={8} md={6}>
           <Review />
         </Grid>
